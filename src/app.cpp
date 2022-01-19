@@ -12,6 +12,7 @@
  */
 
 #include "app.h"
+#include "utils.h"
 
 /** Set the device name, max length is 10 characters */
 char g_ble_dev_name[10] = "WB-Mapper";
@@ -66,6 +67,8 @@ void setup_app(void)
  */
 bool init_app(void)
 {
+	log_test();
+	
 	// Add your application specific initialization here
 	bool init_result = true;
 
