@@ -67,16 +67,19 @@ void setup_app(void)
  */
 bool init_app(void)
 {
-	log_test();
+	log("TEST");
+	log("TAG", "Test message");
 	
 	// Add your application specific initialization here
 	bool init_result = true;
 
-	MYLOG("APP", "Application initialization");
-	if (g_ble_uart_is_connected)
-	{
-		g_ble_uart.print("Application initialization\n");
-	}
+	log("APP", "Application initialization");
+
+	// MYLOG("APP", "Application initialization");
+	// if (g_ble_uart_is_connected)
+	// {
+	// 	g_ble_uart.print("Application initialization\n");
+	// }
 
 	pinMode(WB_IO2, OUTPUT);
 	digitalWrite(WB_IO2, HIGH);
@@ -119,11 +122,13 @@ void app_event_handler(void)
 	{
 		g_task_event_type &= N_STATUS;
 
-		MYLOG("APP", "Timer wakeup");
-		if (g_ble_uart_is_connected)
-		{
-			g_ble_uart.print("Timer wakeup\n");
-		}
+		// MYLOG("APP", "Timer wakeup");
+		// if (g_ble_uart_is_connected)
+		// {
+		// 	g_ble_uart.print("Timer wakeup\n");
+		// }
+
+		log("APP", "Timer wakeup");
 
 		clear_acc_int();
 
@@ -135,11 +140,13 @@ void app_event_handler(void)
 
 		if (lora_busy)
 		{
-			MYLOG("APP", "LoRaWAN TX cycle not finished, skip this event");
-			if (g_ble_uart_is_connected)
-			{
-				g_ble_uart.print("LoRaWAN TX cycle not finished, skip this event\n");
-			}
+			// MYLOG("APP", "LoRaWAN TX cycle not finished, skip this event");
+			// if (g_ble_uart_is_connected)
+			// {
+			// 	g_ble_uart.print("LoRaWAN TX cycle not finished, skip this event\n");
+			// }
+
+			log("APP", "LoRaWAN TX cycle not finished, skip this event");
 		}
 		else
 		{
@@ -147,6 +154,8 @@ void app_event_handler(void)
 			batt_level.batt16 = read_batt();
 			g_mapper_data.batt_1 = batt_level.batt8[0];
 			g_mapper_data.batt_2 = batt_level.batt8[1];
+
+			log("APP", "Battery level %d", batt_level.batt16);
 			
 			MYLOG("APP", "Battery level %d", batt_level.batt16);
 			MYLOG("APP", "Trying to poll GNSS position");

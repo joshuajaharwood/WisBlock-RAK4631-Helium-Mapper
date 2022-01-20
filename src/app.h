@@ -30,8 +30,8 @@
   {                             \
     if (tag)                  \
       PRINTF("[%s] ", tag); \
-    PRINTF(__VA_ARGS__);      \
-    PRINTF("\n");             \
+      PRINTF(__VA_ARGS__);      \
+      PRINTF("\n");             \
   } while (0)
 #else
 #define MYLOG(...)
