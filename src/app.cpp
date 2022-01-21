@@ -71,10 +71,10 @@ bool init_app(void)
 	bool init_result = true;
 
 	MYLOG("APP", "Application initialization");
-	if (g_ble_uart_is_connected)
-	{
-		g_ble_uart.print("Application initialization\n");
-	}
+	// if (g_ble_uart_is_connected)
+	// {
+	// 	g_ble_uart.print("Application initialization\n");
+	// }
 
 	pinMode(WB_IO2, OUTPUT);
 	digitalWrite(WB_IO2, HIGH);
@@ -118,10 +118,10 @@ void app_event_handler(void)
 		g_task_event_type &= N_STATUS;
 
 		MYLOG("APP", "Timer wakeup");
-		if (g_ble_uart_is_connected)
-		{
-			g_ble_uart.print("Timer wakeup\n");
-		}
+		// if (g_ble_uart_is_connected)
+		// {
+		// 	g_ble_uart.print("Timer wakeup\n");
+		// }
 
 		clear_acc_int();
 
@@ -134,10 +134,10 @@ void app_event_handler(void)
 		if (lora_busy)
 		{
 			MYLOG("APP", "LoRaWAN TX cycle not finished, skip this event");
-			if (g_ble_uart_is_connected)
-			{
-				g_ble_uart.print("LoRaWAN TX cycle not finished, skip this event\n");
-			}
+			// if (g_ble_uart_is_connected)
+			// {
+			// 	g_ble_uart.print("LoRaWAN TX cycle not finished, skip this event\n");
+			// }
 		}
 		else
 		{
@@ -157,10 +157,10 @@ void app_event_handler(void)
 			if (poll_gnss(gnss_option))
 			{
 				MYLOG("APP", "Valid GNSS position acquired");
-				if (g_ble_uart_is_connected)
-				{
-					g_ble_uart.print("Valid GNSS position acquired\n");
-				}
+				// if (g_ble_uart_is_connected)
+				// {
+				// 	g_ble_uart.print("Valid GNSS position acquired\n");
+				// }
 
 				MYLOG("APP", "Lat 1: %02X", g_mapper_data.lat_1);
 				MYLOG("APP", "Lat 2: %02X", g_mapper_data.lat_2);
@@ -177,49 +177,49 @@ void app_event_handler(void)
 				MYLOG("APP", "Batt 1: %02X", g_mapper_data.batt_1);
 				MYLOG("APP", "Batt 2: %02X", g_mapper_data.batt_2);
 
-				if (g_ble_uart_is_connected) {
-					g_ble_uart.printf("Lat 1: %02X\n", g_mapper_data.lat_1);
-					g_ble_uart.printf("Lat 2: %02X\n", g_mapper_data.lat_2);
-					g_ble_uart.printf("Lat 3: %02X\n", g_mapper_data.lat_3);
-					g_ble_uart.printf("Lat 4: %02X\n", g_mapper_data.lat_4);
-					g_ble_uart.printf("Long 1: %02X\n", g_mapper_data.long_1);
-					g_ble_uart.printf("Long 2: %02X\n", g_mapper_data.long_2);
-					g_ble_uart.printf("Long 3: %02X\n", g_mapper_data.long_3);
-					g_ble_uart.printf("Long 4: %02X\n", g_mapper_data.long_4);
-					g_ble_uart.printf("Alt 1: %02X\n", g_mapper_data.alt_1);
-					g_ble_uart.printf("Alt 2: %02X\n", g_mapper_data.alt_2);
-					g_ble_uart.printf("Acy 1: %02X\n", g_mapper_data.acy_1);
-					g_ble_uart.printf("Acy 2: %02X\n", g_mapper_data.acy_2);
-					g_ble_uart.printf("Batt 1: %02X\n", g_mapper_data.batt_1);
-					g_ble_uart.printf("Batt 2: %02X\n", g_mapper_data.batt_2);
-				}
+				// if (g_ble_uart_is_connected) {
+				// 	g_ble_uart.printf("Lat 1: %02X\n", g_mapper_data.lat_1);
+				// 	g_ble_uart.printf("Lat 2: %02X\n", g_mapper_data.lat_2);
+				// 	g_ble_uart.printf("Lat 3: %02X\n", g_mapper_data.lat_3);
+				// 	g_ble_uart.printf("Lat 4: %02X\n", g_mapper_data.lat_4);
+				// 	g_ble_uart.printf("Long 1: %02X\n", g_mapper_data.long_1);
+				// 	g_ble_uart.printf("Long 2: %02X\n", g_mapper_data.long_2);
+				// 	g_ble_uart.printf("Long 3: %02X\n", g_mapper_data.long_3);
+				// 	g_ble_uart.printf("Long 4: %02X\n", g_mapper_data.long_4);
+				// 	g_ble_uart.printf("Alt 1: %02X\n", g_mapper_data.alt_1);
+				// 	g_ble_uart.printf("Alt 2: %02X\n", g_mapper_data.alt_2);
+				// 	g_ble_uart.printf("Acy 1: %02X\n", g_mapper_data.acy_1);
+				// 	g_ble_uart.printf("Acy 2: %02X\n", g_mapper_data.acy_2);
+				// 	g_ble_uart.printf("Batt 1: %02X\n", g_mapper_data.batt_1);
+				// 	g_ble_uart.printf("Batt 2: %02X\n", g_mapper_data.batt_2);
+				// }
 
 				lmh_error_status result = send_lora_packet((uint8_t *)&g_mapper_data, MAPPER_DATA_LEN);
 				switch (result)
 				{
 				case LMH_SUCCESS:
 					MYLOG("APP", "Packet enqueued");
-					if (g_ble_uart_is_connected)
-					{
-						g_ble_uart.print("Packet enqueued\n");
-					}
+					// if (g_ble_uart_is_connected)
+					// {
+					// 	g_ble_uart.print("Packet enqueued\n");
+					// }
 					/// \todo set a flag that TX cycle is running
 					lora_busy = true;
 					
 					break;
 				case LMH_BUSY:
 					MYLOG("APP", "LoRa transceiver is busy");
-					if (g_ble_uart_is_connected)
-					{
-						g_ble_uart.print("LoRa transceiver is busy\n");
-					}
+					// if (g_ble_uart_is_connected)
+					// {
+					// 	g_ble_uart.print("LoRa transceiver is busy\n");
+					// }
 					break;
 				case LMH_ERROR:
 					MYLOG("APP", "Packet error, too big to send with current DR");
-					if (g_ble_uart_is_connected)
-					{
-						g_ble_uart.print("Packet error, too big to send with current DR\n");
-					}
+					// if (g_ble_uart_is_connected)
+					// {
+					// 	g_ble_uart.print("Packet error, too big to send with current DR\n");
+					// }
 					break;
 				}
 
@@ -227,10 +227,10 @@ void app_event_handler(void)
 			else
 			{
 				MYLOG("APP", "No valid GNSS position");
-				if (g_ble_uart_is_connected)
-				{
-					g_ble_uart.print("No valid GNSS position\n");
-				}
+				// if (g_ble_uart_is_connected)
+				// {
+				// 	g_ble_uart.print("No valid GNSS position\n");
+				// }
 			}
 
 			// Remember last time sending
@@ -247,10 +247,10 @@ void app_event_handler(void)
 	{
 		g_task_event_type &= N_ACC_TRIGGER;
 		MYLOG("APP", "ACC triggered");
-		if (g_ble_uart_is_connected)
-		{
-			g_ble_uart.print("ACC triggered\n");
-		}
+		// if (g_ble_uart_is_connected)
+		// {
+		// 	g_ble_uart.print("ACC triggered\n");
+		// }
 
 		// Check time since last send
 		bool send_now = true;
@@ -264,23 +264,23 @@ void app_event_handler(void)
 					delayed_sending.stop();
 					MYLOG("APP", "Expired time %d", (int)(millis() - last_pos_send));
 					MYLOG("APP", "Max delay time %d", (int)min_delay);
-					if (g_ble_uart_is_connected)
-					{
-						g_ble_uart.printf("Expired time %d\n", (millis() - last_pos_send));
-						g_ble_uart.printf("Max delay time %d\n", min_delay);
-					}
+					// if (g_ble_uart_is_connected)
+					// {
+					// 	g_ble_uart.printf("Expired time %d\n", (millis() - last_pos_send));
+					// 	g_ble_uart.printf("Max delay time %d\n", min_delay);
+					// }
 					time_t wait_time = abs(min_delay - (millis() - last_pos_send) >= 0) ? (min_delay - (millis() - last_pos_send)) : min_delay;
 					MYLOG("APP", "Wait time %ld", (long)wait_time);
-					if (g_ble_uart_is_connected)
-					{
-						g_ble_uart.printf("Wait time %d\n", wait_time);
-					}
+					// if (g_ble_uart_is_connected)
+					// {
+					// 	g_ble_uart.printf("Wait time %d\n", wait_time);
+					// }
 
 					MYLOG("APP", "Only %lds since last position message, send delayed in %lds", (long)((millis() - last_pos_send) / 1000), (long)(wait_time / 1000));
-					if (g_ble_uart_is_connected)
-					{
-						g_ble_uart.printf("Only %ds since last pos msg, delay by %ds\n", ((millis() - last_pos_send) / 1000), (wait_time / 1000));
-					}
+					// if (g_ble_uart_is_connected)
+					// {
+					// 	g_ble_uart.printf("Only %ds since last pos msg, delay by %ds\n", ((millis() - last_pos_send) / 1000), (wait_time / 1000));
+					// }
 					delayed_sending.setPeriod(wait_time);
 					delayed_sending.start();
 					delayed_active = true;
@@ -353,10 +353,10 @@ void lora_data_handler(void)
 		/**************************************************************/
 		g_task_event_type &= N_LORA_DATA;
 		MYLOG("APP", "Received package over LoRa");
-		if (g_ble_uart_is_connected)
-		{
-			g_ble_uart.print("Received package over LoRa\n");
-		}
+		// if (g_ble_uart_is_connected)
+		// {
+		// 	g_ble_uart.print("Received package over LoRa\n");
+		// }
 
 		char log_buff[g_rx_data_len * 3] = {0};
 		uint8_t log_idx = 0;
@@ -368,10 +368,10 @@ void lora_data_handler(void)
 		lora_busy = false;
 
 		MYLOG("APP", "%s", log_buff);
-		if (g_ble_uart_is_connected)
-		{
-			g_ble_uart.printf("%s", log_buff);
-		}
+		// if (g_ble_uart_is_connected)
+		// {
+		// 	g_ble_uart.printf("%s", log_buff);
+		// }
 
 		/**************************************************************/
 		/**************************************************************/
@@ -403,10 +403,10 @@ void lora_data_handler(void)
 		g_task_event_type &= N_LORA_TX_FIN;
 
 		MYLOG("APP", "LPWAN TX cycle %s", g_rx_fin_result ? "finished ACK" : "failed NAK");
-		if (g_ble_uart_is_connected)
-		{
-			g_ble_uart.printf("LPWAN TX cycle %s\n", g_rx_fin_result ? "finished ACK" : "failed NAK");
-		}
+		// if (g_ble_uart_is_connected)
+		// {
+		// 	g_ble_uart.printf("LPWAN TX cycle %s\n", g_rx_fin_result ? "finished ACK" : "failed NAK");
+		// }
 
 		/// \todo reset flag that TX cycle is running
 		lora_busy = false;
