@@ -6,3 +6,4 @@
 .vscode/extensions.json
 Generated
 Generated/*
+.DS_Store
