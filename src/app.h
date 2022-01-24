@@ -13,13 +13,13 @@
 #ifndef APP_H
 #define APP_H
 
+// Add your required includes after Arduino.h
 #include <Arduino.h>
-/** Add you required includes after Arduino.h */
 
-/** Include the WisBlock-API */
-#include <WisBlock-API.h> // Click to install library: http://librarymanager/All#WisBlock-API
+// Install WisBlock-API dependency for Arduino IDE: http://librarymanager/All#WisBlock-API
+#include <WisBlock-API.h>
 
-// Debug output set to 0 to disable app debug output
+// Set MY_DEBUG build flag for Serial and BLE logging output
 #ifndef MY_DEBUG
 #define MY_DEBUG 1
 #endif
@@ -49,7 +49,7 @@
 #define MYLOG(...)
 #endif
 
-/** Application function definitions */
+// Application function definitions
 void setup_app(void);
 bool init_app(void);
 void app_event_handler(void);
@@ -62,28 +62,28 @@ void lora_rx_failed(void);
 #define ACC_TRIGGER 0b1000000000000000
 #define N_ACC_TRIGGER 0b0111111111111111
 
-/** Application stuff */
+// Task priority sent with semaphores in calls to xSemaphoreGiveFromISR().
 extern BaseType_t g_higher_priority_task_woken;
 
-// GNSS options
+// GNSS module options
 #define RAK1910_GNSS 1
 #define RAK12500_GNSS 2
 
-// GNSS functions
+// GNSS functionality
 #include "TinyGPS++.h"
 #include <SoftwareSerial.h>
 #include <SparkFun_u-blox_GNSS_Arduino_Library.h> // RAK12500_GNSS
 uint8_t init_gnss(void);
 bool poll_gnss(uint8_t gnss_option);
 
-/** Accelerometer stuff */
+// Accelerometer functionality
 #include <SparkFunLIS3DH.h>
 #define INT1_PIN WB_IO5
 bool init_acc(void);
 void clear_acc_int(void);
 void read_acc(void);
 
-// LoRaWan functions
+// LoRaWan functionality
 struct mapper_data_s
 {
 	uint8_t lat_1 = 0;	// 1
@@ -105,13 +105,14 @@ struct mapper_data_s
 extern mapper_data_s g_mapper_data;
 #define MAPPER_DATA_LEN 14 // sizeof(g_mapper_data)
 
-/** Battery level uinion */
+// Battery level union
 union batt_s
 {
 	uint16_t batt16 = 0;
 	uint8_t batt8[2];
 };
-/** Latitude/Longitude value union */
+
+// Latitude/longitude value union
 union latLong_s
 {
 	uint32_t val32;
