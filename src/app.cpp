@@ -246,7 +246,7 @@ void app_event_handler(void)
 	if ((g_task_event_type & ACC_TRIGGER) == ACC_TRIGGER &&  g_lpwan_has_joined)
 	{
 		g_task_event_type &= N_ACC_TRIGGER;
-		MYLOG("APP", "ACC triggered");
+		MYLOG("APP", "ACC detected movement");
 		// if (g_ble_uart_is_connected)
 		// {
 		// 	g_ble_uart.print("ACC triggered\n");
